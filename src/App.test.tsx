@@ -39,4 +39,29 @@ describe("App Navigation", () => {
     expect(screen.getByText("Test message")).toBeInTheDocument();
     expect(screen.getByText("TestUser")).toBeInTheDocument();
   });
+
+  it("should clear form data when navigating away", () => {
+    render(<App />);
+
+    // Navigate to form
+    fireEvent.click(screen.getByText("New Message"));
+
+    // Enter data
+    fireEvent.change(screen.getByPlaceholderText("Username"), {
+      target: { value: "TestUser" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Message"), {
+      target: { value: "Test message" },
+    });
+
+    // Navigate back to list
+    fireEvent.click(screen.getByText("Back to Messages"));
+
+    // Navigate to form again
+    fireEvent.click(screen.getByText("New Message"));
+
+    // Verify form is cleared
+    expect(screen.getByPlaceholderText("Username")).toHaveValue("");
+    expect(screen.getByPlaceholderText("Message")).toHaveValue("");
+  });
 });

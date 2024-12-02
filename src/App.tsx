@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MessageList from "./components/MessageList/MessageList";
 import MessageForm from "./components/MessageForm/MessageForm";
+import Navigation from "./components/Navigation/Navigation";
 import { Message } from "./types/Message";
 
 export default function App() {
@@ -22,12 +23,10 @@ export default function App() {
         <MessageForm onSubmit={addMessage} onClose={() => setShowForm(false)} />
       ) : (
         <>
-          <button
-            className="new-message-button"
-            onClick={() => setShowForm(true)}
-          >
-            New Message
-          </button>
+          <Navigation
+            view={showForm ? "form" : "list"}
+            onNavigate={(view) => setShowForm(view === "form")}
+          />
           <MessageList messages={messages} />
         </>
       )}

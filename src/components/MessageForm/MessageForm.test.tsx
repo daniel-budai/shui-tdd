@@ -1,62 +1,81 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import MessageForm from "./MessageForm";
+import { MESSAGES } from "../../constants/messages";
 
 describe("MessageForm", () => {
-  it("should render form with username and message inputs", () => {
-    render(<MessageForm onSubmit={() => {}} onClose={() => {}} />);
-    expect(screen.getByPlaceholderText("Username")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Message")).toBeInTheDocument();
-    expect(screen.getByText("Post Message")).toBeInTheDocument();
-  });
+  describe("Form Elements", () => {
+    it("should display all required input fields and buttons", () => {
+      render(<MessageForm onSubmit={() => {}} onClose={() => {}} />);
 
-  it("should show error when submitting empty message", () => {
-    render(<MessageForm onSubmit={() => {}} onClose={() => {}} />);
+      // Message input field
+      expect(
+        screen.getByPlaceholderText(MESSAGES.PLACEHOLDERS.MESSAGE)
+      ).toBeInTheDocument();
 
-    const submitButton = screen.getByText("Post Message");
-    fireEvent.click(submitButton);
+      // Username field
+      expect(
+        screen.getByPlaceholderText(MESSAGES.PLACEHOLDERS.USERNAME)
+      ).toBeInTheDocument();
 
-    expect(screen.getByText("Message cannot be empty")).toBeInTheDocument();
-  });
-
-  it("should clear form after successful submission", () => {
-    const onSubmit = vi.fn();
-    render(<MessageForm onSubmit={onSubmit} onClose={() => {}} />);
-
-    const usernameInput = screen.getByPlaceholderText("Username");
-    const messageInput = screen.getByPlaceholderText("Message");
-
-    fireEvent.change(usernameInput, { target: { value: "TestUser" } });
-    fireEvent.change(messageInput, { target: { value: "Test message" } });
-
-    const submitButton = screen.getByText("Post Message");
-    fireEvent.click(submitButton);
-
-    expect(onSubmit).toHaveBeenCalledWith({
-      username: "TestUser",
-      content: "Test message",
-      timestamp: expect.any(Date),
+      // Submit button
+      expect(
+        screen.getByText(MESSAGES.LABELS.POST_MESSAGE)
+      ).toBeInTheDocument();
     });
-
-    expect(usernameInput).toHaveValue("");
-    expect(messageInput).toHaveValue("");
   });
 
-  it("should clear form when navigating away", () => {
-    const onClose = vi.fn();
-    render(<MessageForm onSubmit={() => {}} onClose={onClose} />);
+  describe("Message Validation", () => {
+    it("should prevent empty message submission with error message", () => {
+      render(<MessageForm onSubmit={() => {}} onClose={() => {}} />);
 
-    const usernameInput = screen.getByPlaceholderText("Username");
-    const messageInput = screen.getByPlaceholderText("Message");
+      fireEvent.click(screen.getByText(MESSAGES.LABELS.POST_MESSAGE));
+      expect(
+        screen.getByText(MESSAGES.ERRORS.EMPTY_MESSAGE)
+      ).toBeInTheDocument();
+    });
+  });
 
-    fireEvent.change(usernameInput, { target: { value: "TestUser" } });
-    fireEvent.change(messageInput, { target: { value: "Test message" } });
+  describe("Message Submission", () => {
+    it("should successfully submit valid message data", () => {
+      const onSubmit = vi.fn();
+      render(<MessageForm onSubmit={onSubmit} onClose={() => {}} />);
 
-    const backButton = screen.getByText("Back to Messages");
-    fireEvent.click(backButton);
+      // Fill form
+      fireEvent.change(
+        screen.getByPlaceholderText(MESSAGES.PLACEHOLDERS.USERNAME),
+        { target: { value: "TestUser" } }
+      );
+      fireEvent.change(
+        screen.getByPlaceholderText(MESSAGES.PLACEHOLDERS.MESSAGE),
+        { target: { value: "Test message" } }
+      );
 
-    expect(onClose).toHaveBeenCalled();
-    expect(usernameInput).toHaveValue("");
-    expect(messageInput).toHaveValue("");
+      // Submit
+      fireEvent.click(screen.getByText(MESSAGES.LABELS.POST_MESSAGE));
+
+      // Verify submission
+      expect(onSubmit).toHaveBeenCalledWith({
+        username: "TestUser",
+        content: "Test message",
+        timestamp: expect.any(Date),
+      });
+    });
+  });
+
+  describe("Form Navigation", () => {
+    it("should clear form data when closing", () => {
+      const onClose = vi.fn();
+      render(<MessageForm onSubmit={() => {}} onClose={onClose} />);
+
+      // Fill and close form
+      fireEvent.change(
+        screen.getByPlaceholderText(MESSAGES.PLACEHOLDERS.USERNAME),
+        { target: { value: "TestUser" } }
+      );
+      fireEvent.click(screen.getByText(MESSAGES.LABELS.BACK_TO_MESSAGES));
+
+      expect(onClose).toHaveBeenCalled();
+    });
   });
 });

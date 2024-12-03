@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Navigation from "./Navigation";
+import Navigation from "../Navigation";
 
 describe("Navigation", () => {
   describe("Navigation Display", () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import MessageForm from "./MessageForm";
-import { MESSAGES } from "../../constants/messages";
+import MessageForm from "../MessageForm";
+import { MESSAGES } from "../../../constants/messages";
 
 describe("MessageForm", () => {
   describe("Form Elements", () => {

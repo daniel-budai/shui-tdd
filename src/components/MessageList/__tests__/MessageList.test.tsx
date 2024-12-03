@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import MessageList from "./MessageList";
+import MessageList from "../MessageList";
 
 describe("MessageList", () => {
   describe("Empty State", () => {

@@ -1,4 +1,4 @@
-import MessageContainer from "./components/MessageContainer/MessageContainer";
+import MessageContainer from "../components/MessageContainer/MessageContainer";
 
 export default function App() {
   return (

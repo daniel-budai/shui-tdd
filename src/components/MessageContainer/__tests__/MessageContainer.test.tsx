@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import MessageContainer from "./MessageContainer";
+import MessageContainer from "../MessageContainer";
 
 describe("MessageContainer", () => {
   describe("Message Creation", () => {

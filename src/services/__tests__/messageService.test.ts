@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { messageService } from "./messageService";
-import { MESSAGES } from "../constants/messages";
+import { messageService } from "../messageService";
+import { MESSAGES } from "../../constants/messages";
 
 describe("messageService", () => {
   describe("Message Creation", () => {

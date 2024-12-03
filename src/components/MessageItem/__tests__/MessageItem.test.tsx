@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import MessageItem from "./MessageItem";
+import MessageItem from "../MessageItem";
 
 describe("MessageItem", () => {
   describe("Message Details", () => {

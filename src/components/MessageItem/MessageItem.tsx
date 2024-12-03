@@ -1,4 +1,5 @@
 import { Message } from "../../types/Message";
+import { formatDate } from "../../utils/dateFormatter";
 
 type MessageItemProps = Omit<Message, "id">;
 
@@ -11,13 +12,7 @@ export default function MessageItem({
     <div data-testid="message-item" className="message-item">
       <div className="message-header">
         <h3 className="username">{username}</h3>
-        <time className="timestamp">
-          {timestamp.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </time>
+        <time className="timestamp">{formatDate(timestamp)}</time>
       </div>
       <p className="message-content">{content}</p>
     </div>

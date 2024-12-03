@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Message } from "../types/Message";
 
 export function useMessages() {
@@ -12,9 +12,11 @@ export function useMessages() {
     setMessages((prev) => [...prev, newMessage]);
   };
 
-  const sortedMessages = messages.sort(
-    (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
-  );
+  const sortedMessages = useMemo(() => {
+    return messages.sort(
+      (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
+    );
+  }, [messages]);
 
   return {
     messages: sortedMessages,

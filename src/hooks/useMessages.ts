@@ -13,7 +13,7 @@ export function useMessages() {
   };
 
   const sortedMessages = useMemo(() => {
-    return messages.sort(
+    return [...messages].sort(
       (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
     );
   }, [messages]);

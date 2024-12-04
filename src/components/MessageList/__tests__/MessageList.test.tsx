@@ -30,8 +30,8 @@ describe("MessageList", () => {
       render(<MessageList messages={messages} />);
 
       const messageElements = screen.getAllByTestId("message-item");
-      expect(messageElements[0]).toHaveTextContent("Second message");
-      expect(messageElements[1]).toHaveTextContent("First message");
+      expect(messageElements[0]).toHaveTextContent(/Second message/);
+      expect(messageElements[1]).toHaveTextContent(/First message/);
     });
 
     it("should display message metadata including username and timestamp", () => {

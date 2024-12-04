@@ -17,7 +17,7 @@ export default function MessageContainer() {
   };
 
   return (
-    <div className="message-container">
+    <div className="max-w-2xl mx-auto mt-8 bg-gray-50 rounded-lg shadow-lg">
       {currentView === "form" ? (
         <MessageForm
           onSubmit={handleSubmit}

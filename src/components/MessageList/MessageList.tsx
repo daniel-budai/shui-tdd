@@ -12,14 +12,14 @@ export default function MessageList({ messages }: MessageListProps) {
 
   if (messages.length === 0) {
     return (
-      <div data-testid="message-list" className="message-list">
-        <p className="empty-message">No messages yet</p>
+      <div data-testid="message-list" className="p-4">
+        <p className="text-center text-gray-500">No messages yet</p>
       </div>
     );
   }
 
   return (
-    <div data-testid="message-list" className="message-list">
+    <div data-testid="message-list" className="p-4 space-y-4">
       {sortedMessages.map((message) => (
         <MessageItem key={message.id} {...message} />
       ))}

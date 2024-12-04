@@ -14,13 +14,9 @@ export default function MessageList({ messages }: MessageListProps) {
     );
   }
 
-  const sortedMessages = [...messages].sort(
-    (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
-  );
-
   return (
     <div data-testid="message-list" className="message-list">
-      {sortedMessages.map((message) => (
+      {messages.map((message) => (
         <MessageItem key={message.id} {...message} />
       ))}
     </div>
